@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Edit Post</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+        {{ form.content|safe }}  <!-- This is where CKEditor will be applied -->
+    </div>
+
+    {% if post.thumbnail %}
+    <input type="checkbox" name="clear_thumbnail" id="clear_thumbnail">
+    <label for="clear_thumbnail">Clear Thumbnail Image</label><br>
+    {% endif %}
+    {% if post.image1 %}
+    <input type="checkbox" name="clear_image1" id="clear_image1">
+    <label for="clear_image1">Clear Image 1</label><br>
+    {% endif %}
+    {% if post.image2 %}
+    <input type="checkbox" name="clear_image2" id="clear_image2">
+    <label for="clear_image2">Clear Image 2</label><br>
+    {% endif %}
+    {% if post.image3 %}
+    <input type="checkbox" name="clear_image3" id="clear_image3">
+    <label for="clear_image3">Clear Image 3</label><br>
+    {% endif %}
+    {% if post.image4 %}
+    <input type="checkbox" name="clear_image4" id="clear_image4">
+    <label for="clear_image4">Clear Image 4</label><br>
+    {% endif %}
+
+    <button type="submit">Save Changes</button>
+</form>
+
+<!-- Include CKEditor JS -->
+<script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_content', {
+        toolbar: 'Full',
+        height: 300,
+        width: 800,
+        filebrowserUploadUrl: '/ckeditor/upload/',
+        filebrowserBrowseUrl: '/ckeditor/browse/'
+    });
+</script>
+{% endblock %}

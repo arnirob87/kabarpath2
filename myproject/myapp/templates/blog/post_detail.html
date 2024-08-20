@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1>{{ post.title }}</h1>
+{% if post.thumbnail %}
+<img src="{{ post.thumbnail.url }}" alt="{{ post.title }}">
+{% endif %}
+{{ post.content|safe }}
+
+{% if post.image1 %}
+<img src="{{ post.image1.url }}" alt="Image 1">
+{% endif %}
+{% if post.image2 %}
+<img src="{{ post.image2.url }}" alt="Image 2">
+{% endif %}
+{% if post.image3 %}
+<img src="{{ post.image3.url }}" alt="Image 3">
+{% endif %}
+{% if post.image4 %}
+<img src="{{ post.image4.url }}" alt="Image 4">
+{% endif %}
+
+<p>Likes: {{ post.total_likes }}</p>
+
+{% if request.user.is_authenticated %}
+<form action="{% url 'like_post' pk=post.pk %}" method="post">
+    {% csrf_token %}
+    {% if is_liked %}
+    <button type="submit">Unlike</button>
+    {% else %}
+    <button type="submit">Like</button>
+    {% endif %}
+</form>
+{% endif %}
+
+<h3>Comments</h3>
+{% for comment in comments %}
+<p>{{ comment.author.username }}: {{ comment.text }}</p>
+{% empty %}
+<p>No comments yet.</p>
+{% endfor %}
+
+<h3>Add a comment</h3>
+<form method="post" action="{% url 'add_comment_to_post' pk=post.pk %}">
+    {% csrf_token %}
+    {{ comment_form.as_p }}
+    <button type="submit">Add comment</button>
+</form>
+
+{% if request.user.is_authenticated and request.user == post.author %}
+<a href="{% url 'post_edit' pk=post.pk %}">Edit post</a>
+<a href="{% url 'post_delete' pk=post.pk %}">Delete post</a>
+
+{% endif %}
+{% endblock %}

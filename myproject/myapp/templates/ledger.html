@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Withdrawal Ledger</h2>
+<p>Your Total points: {{ logged_in_user.points }}</p>
+<p>Your remaining points: {{ remaining_points }}</p>
+
+<p>Your remaining balance (in currency): {{ remaining_balance }}</p>
+
+<table>
+    <thead>
+        <tr>
+            <th>Points</th>
+            <th>Money Amount</th>
+            <th>Date</th>
+            <th>Status</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for withdrawal in withdrawals %}
+        <tr>
+            <td>{{ withdrawal.points }}</td>
+            <td>{{ withdrawal.money_amount }}</td>
+            <td>{{ withdrawal.created_at|date:"F j, Y, g:i a" }}</td>
+            <td>
+                {% if withdrawal.is_processed %}
+                    Paid
+                {% else %}
+                    Pending
+                {% endif %}
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

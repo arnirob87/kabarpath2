@@ -26,7 +26,7 @@ class ShippingAddress(models.Model):
 def create_shipping(sender, instance, created, **kwargs):
 	if created:
 		user_shipping = ShippingAddress(user=instance)
-		user_profile.save()
+		user_shipping.save()
 
 # Automate the profile thing
 post_save.connect(create_shipping, sender=User)

@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="withdraw-container">
+    <h2>Withdraw Points</h2>
+    <p>Your remaining points: {{ remaining_points }}</p>
+    <form method="POST">
+        {% csrf_token %}
+        <input type="number" name="points" placeholder="Enter points to withdraw" required>
+        <button type="submit">Withdraw</button>
+    </form>
+</div>
+{% endblock %}
+

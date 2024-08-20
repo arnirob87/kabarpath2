@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>{{ product.name }}</h1>
+{% if product.thumb %}
+<img src="{{ product.thumb.url }}" alt="{{ product.name }}">
+{% endif %}
+<p>{{ product.description|safe }}</p>
+
+{% if product.product_pic1 %}
+<img src="{{ product.product_pic1.url }}" alt="Product Image 1">
+{% endif %}
+{% if product.product_pic2 %}
+<img src="{{ product.product_pic2.url }}" alt="Product Image 2">
+{% endif %}
+{% if product.product_pic3 %}
+<img src="{{ product.product_pic3.url }}" alt="Product Image 3">
+{% endif %}
+{% if product.product_pic4 %}
+<img src="{{ product.product_pic4.url }}" alt="Product Image 4">
+{% endif %}
+
+<h2>Price: ${{ product.price }}</h2>
+
+{% if user.is_authenticated %}
+<a href="{% url 'apply_for_product' product.id %}">Apply for this package</a>
+{% else %}
+<p><a href="{% url 'login' %}">Sign in</a> to apply for this package.</p>
+{% endif %}
+
+{% endblock %}

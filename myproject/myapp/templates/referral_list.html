@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Referrals</h2>
+<ul>
+    {% for referral in referrals %}
+        <li>
+            <a href="{% url 'user_profile' referral.referred.username %}">
+                {% if referral.referred.profile_image %}
+                    <img src="{{ referral.referred.profile_image.url }}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <span class="default-avatar">
+                        <i class="fas fa-user-circle"></i> <!-- You can use any icon from FontAwesome or other icon libraries -->
+                    </span>
+                {% endif %}
+                {{ referral.referred.first_name }} {{ referral.referred.last_name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

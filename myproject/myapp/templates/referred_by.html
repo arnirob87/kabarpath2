@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h2>Referred By</h2>
+<ul>
+    {% for referral in referred_by %}
+        <li>
+            <a href="{% url 'user_profile' referral.referrer.username %}">
+                {% if referral.referrer.profile_image %}
+                    <img src="{{ referral.referrer.profile_image.url }}" alt="Profile Picture" class="profile-pic">
+                {% else %}
+                    <span class="default-avatar">
+                        <i class="fas fa-user-circle"></i>
+                    </span>
+                {% endif %}
+                {{ referral.referrer.first_name }} {{ referral.referrer.last_name }}
+            </a>
+        </li>
+    {% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="profile-container">
+    <h2>User Profile</h2>
+    <div class="profile-details">
+        <p><strong>Username:</strong> {{ user.username }}</p>
+        {% if user.profile_image %}
+        <img src="{{ user.profile_image.url }}" alt="Profile Image" class="profile-image">
+        {% else %}
+        <p>No profile image uploaded.</p>
+        {% endif %}
+        <p><strong>Name:</strong> {{ user.first_name }} {{ user.last_name }}</p>
+        <p><strong>Email Address:</strong> {{ user.email }}</p>
+        <p><strong>Phone Number:</strong> {{ user.phone_number }}</p>
+        <p><strong>Level:</strong> {{ user.level }}</p>
+        <p><strong>Total Points:</strong> {{ user.points }}</p>
+    </div>
+    <div class="edit-button-container">
+        <a href="{% url 'decorative_profile' %}" class="btn btn-primary">Edit Profile</a>
+    </div>
+</div>
+{% endblock %}

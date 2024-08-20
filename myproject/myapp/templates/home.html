@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<h1> Products</h1>
+<ul>
+    {% for product in products %}
+      <li>
+        <a href="{% url 'product_detail' product.id %}">{{ product.name }}</a>
+        <p>Duration: {{ product.duration }}</p>
+        <p>Price: {{ product.price }}</p>
+        <img src="{{ product.thumb.url }}" alt="{{ product.name }}">
+        <p>Starts: {{ product.start_date }}</p>
+        <p>Ends: {{ product.end_date }}</p>
+        <a href="{% url 'product_detail' product.id %}">Details</a> <!-- Link to your registration page -->
+      </li>
+    {% endfor %}
+  </ul>
+{% endblock %}

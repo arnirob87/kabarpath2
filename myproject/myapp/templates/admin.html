@@ -1,0 +1,93 @@
+<!-- admin.html -->
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container">
+    <h2>Admin Dashboard</h2>
+
+    <!-- User Permissions Section -->
+    <h3>User Permissions</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Username</th>
+                <th>Email</th>
+                <th>Can Create Post</th>
+                <th>Can Create Product</th>
+                <th>Points</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+            <tr>
+                <td>{{ user.username }}</td>
+                <td>{{ user.email }}</td>
+                <td>
+                    {% if user.can_create_post %}
+                    <span class="text-success">Allowed</span>
+                    {% else %}
+                    <span class="text-danger">Not Allowed</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if user.can_create_product %}
+                    <span class="text-success">Allowed</span>
+                    {% else %}
+                    <span class="text-danger">Not Allowed</span>
+                    {% endif %}
+                </td>
+                <td>{{ user.points }}</td>
+                <td>
+                    <a href="{% url 'toggle_permission' user.id 'post' %}" class="btn btn-sm btn-primary">
+                        Toggle Post
+                    </a>
+                    <a href="{% url 'toggle_permission' user.id 'product' %}" class="btn btn-sm btn-secondary">
+                        Toggle Product
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <!-- Withdrawal Requests Section -->
+    <h3>Withdrawal Requests</h3>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>User</th>
+                <th>Points</th>
+                <th>Amount</th>
+                <th>Requested At</th>
+                <th>Status</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for request in withdrawal_requests %}
+            <tr>
+                <td>{{ request.user.username }}</td>
+                <td>{{ request.points }}</td>
+                <td>{{ request.money_amount }}</td>
+                <td>{{ request.created_at }}</td>
+                <td>
+                    {% if request.is_processed %}
+                    <span class="text-success">Processed</span>
+                    {% else %}
+                    <span class="text-danger">Pending</span>
+                    {% endif %}
+                </td>
+                <td>
+                    {% if not request.is_processed %}
+                    <a href="{% url 'process_withdrawal' request.id %}" class="btn btn-sm btn-success">
+                        Process
+                    </a>
+                    {% endif %}
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}

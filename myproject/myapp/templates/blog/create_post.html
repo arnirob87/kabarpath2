@@ -1,0 +1,50 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<h2>Create New Post</h2>
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div>
+        <label for="{{ form.title.id_for_label }}">{{ form.title.label }}</label>
+        {{ form.title }}
+    </div>
+    <div>
+        <label for="{{ form.content.id_for_label }}">{{ form.content.label }}</label>
+        {{ form.content|safe }}
+    </div>
+    <div>
+        <label for="{{ form.thumbnail.id_for_label }}">{{ form.thumbnail.label }}</label>
+        {{ form.thumbnail }}
+    </div>
+    <div>
+        <label for="{{ form.image1.id_for_label }}">{{ form.image1.label }}</label>
+        {{ form.image1 }}
+    </div>
+    <div>
+        <label for="{{ form.image2.id_for_label }}">{{ form.image2.label }}</label>
+        {{ form.image2 }}
+    </div>
+    <div>
+        <label for="{{ form.image3.id_for_label }}">{{ form.image3.label }}</label>
+        {{ form.image3 }}
+    </div>
+    <div>
+        <label for="{{ form.image4.id_for_label }}">{{ form.image4.label }}</label>
+        {{ form.image4 }}
+    </div>
+    <button type="submit">Submit</button>
+</form>
+
+<!-- Include CKEditor JS -->
+<script src="//cdn.ckeditor.com/4.16.2/standard/ckeditor.js"></script>
+<script>
+    CKEDITOR.replace('id_content', {
+        toolbar: 'Full',
+        height: 300,
+        width: 800,
+        filebrowserUploadUrl: '{% url "ckeditor_upload" %}',
+        filebrowserBrowseUrl: '{% url "ckeditor_browse" %}'
+    });
+</script>
+{% endblock %}
